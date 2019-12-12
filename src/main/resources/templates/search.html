@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <div>
+        <form method="get" action="filter">
+            <input type="text" name="filter">
+            <button type="submit">Find</button>
+        </form>
+        <table>
+            <tr>
+                <th>Result</th>
+            </tr>
+            <tr th:each="message : ${messages} ">
+                <td th:text="*{message.id}"></td>
+                <td th:text="*{message.text}"></td>
+                <td th:text="*{message.tag}"></td>
+                <strong th:text="${message.authorName}"></strong>
+            </tr>
+
+        </table>
+    </div>
+</body>
+</html>
