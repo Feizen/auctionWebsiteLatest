@@ -1,15 +1,10 @@
 package com.example.auction.controller;
 
-import com.example.auction.module.Message;
-import com.example.auction.module.User;
+import com.example.auction.model.Auction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import com.example.auction.repository.SearchRepository;
 
 import java.util.List;
@@ -17,7 +12,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/search")
-public class SearchingController {
+public class SearchController {
 
     @Autowired
     private SearchRepository searchRepository;
@@ -31,7 +26,7 @@ public class SearchingController {
 //    }
 
     //Adding a new text and tag
-    @GetMapping("/find")
+    @GetMapping("/find")   //"/find"
     public String greeting(
             @RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
@@ -51,23 +46,40 @@ public class SearchingController {
 //    }
 
     //Searching and filtering
-    @PostMapping("/find")
+    @PostMapping("/find") //"/find"
     public String filter(@RequestParam String filter, Map<String, Object> model){
-        List<Message> messages;
+        List<Auction> auctions;
         if(filter != null && !filter.isEmpty()) {
-            messages = searchRepository.findByText(filter);
+            auctions = searchRepository.findByName(filter);
         } else {
-         messages = searchRepository.findAll();
+            auctions = searchRepository.findAll();
         }
-        model.put("messages", messages);
+        model.put("auctions", auctions);
     return "search";
     }
 
     // Show all messages from DB in a searchlist without manually searching
     @GetMapping("/filter")
-    public String getAllMessages(Model model){
-        List<Message> messages = searchRepository.findAll();
-        model.addAttribute("messages", messages);
+    public String getAllAuctions(Model model){
+        List<Auction> auctions = searchRepository.findAll();
+        model.addAttribute("auctions", auctions);
         return "search";
     }
+
+    @GetMapping("/{id}")
+    public String auctionEditForm(@PathVariable("id") Integer auctionId, Model model) {
+        Auction auction = searchRepository.findAuctionById(auctionId);
+        model.addAttribute("auction", auction);
+        return "auction";
+    }
+
+    @GetMapping("/category/{category}")
+    public String auctionCategorySearch(@PathVariable("category") String category, Model model) {
+        List<Auction> auctions = searchRepository.findAuctionByCategory(category);
+        model.addAttribute("auction", auctions);
+//        model.addAttribute("roles", Role.values());
+        return "category";
+    }
+
+
 }

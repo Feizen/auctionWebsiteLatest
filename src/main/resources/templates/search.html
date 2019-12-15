@@ -5,20 +5,34 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <div>
-        <form method="get" action="filter">
-            <input type="text" name="filter">
-            <button type="submit">Find</button>
-        </form>
+<div th:replace="navBar"></div>
+    <div  class="container mt-5" >
+        <div class="form-row" >
+            <div class="form-group col-md-5">
+                <form class="form-inline" method="post" action="/search/find">
+                    <label>
+                        <input class="form-control mb-2" type="text" name="filter" />
+                    </label>
+                    <button class="btn btn-primary ml-2 mb-2" type="submit">Find</button>
+                </form>
+            </div>
+        </div>
+
         <table>
             <tr>
                 <th>Result</th>
+                <th>Auction Name</th>
+                <th>Price</th>
+                <th>Author</th>
+                <th>Category</th>
             </tr>
-            <tr th:each="message : ${messages} ">
-                <td th:text="*{message.id}"></td>
-                <td th:text="*{message.text}"></td>
-                <td th:text="*{message.tag}"></td>
-                <strong th:text="${message.authorName}"></strong>
+            <tr th:each="auction : ${auctions} ">
+                <td th:text="*{auction.id}"></td>
+                <td th:text="*{auction.name}"></td>
+                <td th:text="*{auction.price}"></td>
+                <th th:text="${auction.authorName}"></th>
+                <th th:text="${auction.category}"></th>
+                <td> <a th:href="@{/search/{auctionId}/(auctionId=*{auction.getId()})}">Edit</a></td>
             </tr>
 
         </table>

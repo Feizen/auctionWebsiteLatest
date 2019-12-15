@@ -1,14 +1,19 @@
-<!DOCTYPE HTML>
+
+
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
+    <title>Add</title>
 </head>
 <body>
-<h4>Start searching auctions by<a href="/search"> CLICKING HERE</a></h4>
-<h4>Create an auction by<a href="/search"> CLICKING HERE</a></h4>
-<h4>Register a account by<a href="/registration"> CLICKING HERE</a></h4>
-<h4>Log in into your account by<a href="/login"> CLICKING HERE</a></h4>
-<div></div>
+<div th:replace="navBar"></div>
+<div  class="container mt-5" >
+<div>
+    <h4>Start searching auctions by<a href="/search"> CLICKING HERE</a></h4>
+    <h4>Create an auction by<a href="/add"> CLICKING HERE</a></h4>
+    <h4>Register a account by<a href="/registration"> CLICKING HERE</a></h4>
+    <h4>Log in into your account by<a href="/login"> CLICKING HERE</a></h4>
+</div>
 </body>
 </html>
