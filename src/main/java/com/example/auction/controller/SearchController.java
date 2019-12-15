@@ -1,7 +1,9 @@
 package com.example.auction.controller;
 
 import com.example.auction.model.Auction;
+import com.example.auction.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -78,6 +80,22 @@ public class SearchController {
         List<Auction> auctions = searchRepository.findAuctionByCategory(category);
         model.addAttribute("auction", auctions);
 //        model.addAttribute("roles", Role.values());
+        return "category";
+    }
+
+    @PostMapping("/category/{category}")
+    public String auctionCategoryShowSearch(
+            @AuthenticationPrincipal User user,
+            @RequestParam double price,
+            @RequestParam String category,
+            @RequestParam String description,
+            @RequestParam String name,
+            @RequestParam String tag,
+            Map<String, Object> model){
+        Auction auction = new Auction(name, category, description, price, tag, user);
+        searchRepository.save(auction);
+        List<Auction> auctions = searchRepository.findAuctionByCategory(category);
+        model.put("auctions", auctions);
         return "category";
     }
 

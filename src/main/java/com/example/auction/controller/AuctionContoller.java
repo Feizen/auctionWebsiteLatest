@@ -75,6 +75,7 @@ public class AuctionContoller {
         return "auction";
     }
 
+
     //Searching and filtering
 //    @PostMapping("/filter")
 //    public String filter(@RequestParam String filter, Map<String, Object> model){
